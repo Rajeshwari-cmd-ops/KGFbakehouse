@@ -93,8 +93,8 @@ export default function FlowerProductCard({
           </h3>
         </Link>
 
-        {/* Short Description */}
-        <p className="text-[10px] sm:text-xs text-[#2E1D16]/70 mt-0.5 sm:mt-1 line-clamp-2 leading-relaxed min-h-[1.75rem] sm:min-h-[2rem]">
+        {/* Short Description — Clamped to 1 line on mobile for compact browsable cards, 2 lines on desktop */}
+        <p className="text-[10px] sm:text-xs text-[#2E1D16]/70 mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-2 leading-relaxed min-h-[1.1rem] sm:min-h-[2rem]">
           {prod.description}
         </p>
 

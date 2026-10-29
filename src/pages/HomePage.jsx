@@ -552,6 +552,7 @@ export default function HomePage() {
   const [storyExpanded, setStoryExpanded] = useState(false)
   const [addedItemMap, setAddedItemMap] = useState({})
   const [selectedHomeCategory, setSelectedHomeCategory] = useState('all')
+  const [mobileShowAll, setMobileShowAll] = useState(false)
 
   useEffect(() => {
     if (window.location.hash) {
@@ -565,12 +566,12 @@ export default function HomePage() {
   }, [])
 
   const HOME_BAKE_TABS = [
-    { id: 'all', label: 'All' },
+    { id: 'all', label: 'All Bakes' },
     { id: 'cookies', label: 'Cookies' },
-    { id: 'muffins-cupcakes', label: 'Muffins' },
-    { id: 'breakfast', label: 'Breakfast' },
     { id: 'cakes', label: 'Cakes' },
     { id: 'artisan-breads', label: 'Breads' },
+    { id: 'breakfast', label: 'Waffles' },
+    { id: 'muffins-cupcakes', label: 'Muffins' },
     { id: 'tasty-treats', label: 'Treats' },
     { id: 'sweet-indulgences', label: 'Sweets' },
   ]
@@ -983,7 +984,10 @@ export default function HomePage() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setSelectedHomeCategory(tab.id)}
+                  onClick={() => {
+                    setSelectedHomeCategory(tab.id)
+                    setMobileShowAll(false)
+                  }}
                   className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap min-h-[44px] flex items-center justify-center flex-shrink-0 touch-manipulation ${
                     isActive
                       ? 'bg-[#C4733A] text-white shadow-md scale-105'
@@ -996,18 +1000,46 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Clean Aligned Grid of Flower-Shaped Food Items */}
+          {/* Clean Aligned Grid of Flower-Shaped Food Items (2 items per row on mobile, compact layout) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-6 lg:gap-8">
-            {filteredHomeProducts.map((prod, idx) => (
-              <FlowerProductCard
-                key={prod.id}
-                prod={prod}
-                idx={idx}
-                onAddToCart={handleAddToCart}
-                isAdded={!!addedItemMap[prod.id]}
-              />
-            ))}
+            {filteredHomeProducts.map((prod, idx) => {
+              const isHiddenOnMobile = !mobileShowAll && idx >= 6
+              return (
+                <div
+                  key={prod.id}
+                  className={isHiddenOnMobile ? 'hidden sm:block' : 'block'}
+                >
+                  <FlowerProductCard
+                    prod={prod}
+                    idx={idx}
+                    onAddToCart={handleAddToCart}
+                    isAdded={!!addedItemMap[prod.id]}
+                  />
+                </div>
+              )
+            })}
           </div>
+
+          {/* Mobile "Show More" Button after first 6 items — Short & Browsable Mobile Scroll */}
+          {filteredHomeProducts.length > 6 && (
+            <div className="mt-8 text-center sm:hidden">
+              <button
+                onClick={() => setMobileShowAll(!mobileShowAll)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#C4733A] text-white text-xs font-bold shadow-md hover:bg-[#b0632e] active:scale-95 transition-all touch-manipulation cursor-pointer"
+              >
+                <span>
+                  {mobileShowAll
+                    ? 'Show Less'
+                    : `Show More (${filteredHomeProducts.length - 6} more)`}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileShowAll ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
