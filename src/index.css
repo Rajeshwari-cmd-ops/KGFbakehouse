@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FDF9F3;
+  --color-espresso: #2E1D16;
+  --color-espresso-dark: #1E120D;
+  --color-espresso-surface: #38241C;
+  --color-terracotta: #C4733A;
+  --color-terracotta-hover: #AF622C;
+  --color-sage: #7D8C6F;
+  --color-sage-light: #94A485;
+  --color-sage-bg: #EAEFE6;
+  --color-blush: #F3E3D3;
+  --color-blush-light: #FBF4ED;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    background-color: #FDF9F3;
+    color: #2E1D16;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+    font-family: inherit;
+  }
+}
+
+/* Custom marquee keyframes — calm, gentle, slow glide (no motion sickness) */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 75s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover to let the user read comfortably */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 85s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
+@keyframes steamRise {
+  0% {
+    transform: translateY(10px) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.4;
+    transform: translateY(-40px) scale(1.15) rotate(6deg);
+  }
+  100% {
+    transform: translateY(-85px) scale(1.4) rotate(-6deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flourDrift {
+  0% {
+    transform: translateY(-20px) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.75;
+  }
+  75% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(520px) translateX(40px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes priceShimmer {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(196, 115, 58, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 14px 4px rgba(196, 115, 58, 0.5);
+  }
+}
+
+@keyframes textShimmer {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FDF9F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #C4733A;
+  border-radius: 9999px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-marquee-slow {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   PAGE-SPECIFIC SUBTLE BACKGROUND PERSONALITIES (Low Opacity, No Distraction)
+══════════════════════════════════════════════════════ */
+
+/* 1. Home Page: Tiny scattered cupcake + wheat outline pattern (barely visible wallpaper) */
+.home-wallpaper-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg transform='translate(30, 30)' stroke='%23C4733A' stroke-width='1' stroke-opacity='0.06' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-5 2 L-3 8 C-3 9, 3 9, 3 8 L5 2' /%3E%3Cpath d='M-6 2 C-7 -2, -2 -5, 0 -5 C2 -5, 7 -2, 6 2' /%3E%3Ccircle cx='0' cy='-7' r='0.9' fill='%23C4733A' fill-opacity='0.06' stroke='none' /%3E%3C/g%3E%3Cg transform='translate(90, 30)' stroke='%23C4733A' stroke-width='1' stroke-opacity='0.06' fill='none' stroke-linecap='round'%3E%3Cline x1='0' y1='10' x2='0' y2='-8' /%3E%3Cpath d='M0 -5 C-2 -7, -4 -5, -1 -2' /%3E%3Cpath d='M0 -5 C2 -7, 4 -5, 1 -2' /%3E%3Cpath d='M0 0 C-2 -2, -4 0, -1 3' /%3E%3Cpath d='M0 0 C2 -2, 4 0, 1 3' /%3E%3C/g%3E%3Cg transform='translate(30, 90)' stroke='%23C4733A' stroke-width='0.9' stroke-opacity='0.05' fill='none'%3E%3Ccircle cx='0' cy='0' r='1.8' /%3E%3Ccircle cx='0' cy='-3.8' r='1.5' /%3E%3Ccircle cx='3.6' cy='-1.2' r='1.5' /%3E%3Ccircle cx='2.2' cy='3.1' r='1.5' /%3E%3Ccircle cx='-2.2' cy='3.1' r='1.5' /%3E%3Ccircle cx='-3.6' cy='-1.2' r='1.5' /%3E%3C/g%3E%3Cg transform='translate(90, 90)' fill='%23C4733A' fill-opacity='0.05'%3E%3Cpath d='M0 -3 Q0 0 3 0 Q0 0 0 3 Q0 0 -3 0 Q0 0 0 -3 Z' /%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 120px 120px;
+}
+
+/* 2. About / Story Section: Faint horizontal notebook lines (vintage baker recipe book) */
+.bakery-notebook-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 31px,
+    rgba(196, 115, 58, 0.045) 32px
+  );
+}
+
+/* 3. Our Bakes / Menu: Tiny dot-grid & crumb stippling pattern behind cards */
+.bakery-crumb-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C4733A' fill-opacity='0.07'%3E%3Ccircle cx='3' cy='3' r='0.9' /%3E%3Ccircle cx='17' cy='17' r='0.6' /%3E%3Ccircle cx='25' cy='10' r='0.7' /%3E%3Ccircle cx='10' cy='24' r='0.8' /%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 28px 28px;
+}
+
+/* 4. Weekly Bestsellers: Soft warm blush tint band */
+.bestsellers-blush-band {
+  background: linear-gradient(180deg, #F9ECE1 0%, #F5E8DC 100%);
+  border-top: 1px solid rgba(196, 115, 58, 0.12);
+  border-bottom: 1px solid rgba(196, 115, 58, 0.12);
+}
+
+/* Legacy subtle wallpaper pattern */
+.bakery-wallpaper-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg transform='translate(25, 25)' stroke='%23C4733A' stroke-width='1.1' stroke-opacity='0.08' fill='none'%3E%3Ccircle cx='0' cy='0' r='2.2' /%3E%3Ccircle cx='0' cy='-4.5' r='1.8' /%3E%3Ccircle cx='4.3' cy='-1.4' r='1.8' /%3E%3Ccircle cx='2.6' cy='3.6' r='1.8' /%3E%3Ccircle cx='-2.6' cy='3.6' r='1.8' /%3E%3Ccircle cx='-4.3' cy='-1.4' r='1.8' /%3E%3C/g%3E%3Cg transform='translate(75, 25)' stroke='%23C4733A' stroke-width='1.1' stroke-opacity='0.08' fill='none' stroke-linecap='round'%3E%3Cline x1='0' y1='12' x2='0' y2='-10' /%3E%3Cpath d='M0 -6 C-3 -9, -5 -6, -2 -3 C0 -4, 0 -6, 0 -6' /%3E%3Cpath d='M0 -6 C3 -9, 5 -6, 2 -3 C0 -4, 0 -6, 0 -6' /%3E%3Cpath d='M0 0 C-3 -3, -5 0, -2 3 C0 2, 0 0, 0 0' /%3E%3Cpath d='M0 0 C3 -3, 5 0, 2 3 C0 2, 0 0, 0 0' /%3E%3Cpath d='M0 6 C-3 3, -5 6, -2 9 C0 8, 0 6, 0 6' /%3E%3Cpath d='M0 6 C3 3, 5 6, 2 9 C0 8, 0 6, 0 6' /%3E%3C/g%3E%3Cg transform='translate(25, 75)' stroke='%23C4733A' stroke-width='1.1' stroke-opacity='0.08' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-6 2 L-4 9 C-4 10, 4 10, 4 9 L6 2' /%3E%3Cpath d='M-7 2 C-8 -2, -3 -6, 0 -6 C3 -6, 8 -2, 7 2' /%3E%3Ccircle cx='0' cy='-8' r='1' fill='%23C4733A' fill-opacity='0.08' stroke='none' /%3E%3C/g%3E%3Cg transform='translate(75, 75)' fill='%23C4733A' fill-opacity='0.06'%3E%3Cpath d='M0 -4 Q0 0 4 0 Q0 0 0 4 Q0 0 -4 0 Q0 0 0 -4 Z' /%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 100px 100px;
+}
+
+/* ══════════════════════════════════════════════════════
+   5. Weekly Bestsellers: Cute Falling Bakery Treats Animation
+══════════════════════════════════════════════════════ */
+@keyframes treat-fall {
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.82;
+  }
+  86% {
+    opacity: 0.82;
+  }
+  100% {
+    top: 104%;
+    opacity: 0;
+  }
+}
+
+@keyframes treat-sway-1 {
+  0%, 100% {
+    transform: translateX(-12px) rotate(-16deg);
+  }
+  50% {
+    transform: translateX(14px) rotate(16deg);
+  }
+}
+
+@keyframes treat-sway-2 {
+  0%, 100% {
+    transform: translateX(15px) rotate(20deg);
+  }
+  50% {
+    transform: translateX(-13px) rotate(-14deg);
+  }
+}
+
+@keyframes treat-sway-3 {
+  0%, 100% {
+    transform: translateX(-10px) rotate(10deg);
+  }
+  50% {
+    transform: translateX(12px) rotate(-18deg);
+  }
+}
+
+.treat-sway-1 {
+  animation: treat-sway-1 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.treat-sway-2 {
+  animation: treat-sway-2 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.treat-sway-3 {
+  animation: treat-sway-3 4.8s ease-in-out infinite;
+  will-change: transform;
+}
